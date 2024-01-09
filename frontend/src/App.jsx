@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import SuperheroForm from "./components/superheroForm";
 
 function SuperheroDetails(props) {
   console.log(props);
@@ -40,6 +41,7 @@ function App() {
             );
           })}
       </ul>
+      <SuperheroForm />
     </div>
   );
 }
