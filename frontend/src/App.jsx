@@ -1,48 +1,19 @@
-import { useEffect, useState } from "react";
 import "./App.css";
-import SuperheroForm from "./components/superheroForm";
-
-function SuperheroDetails(props) {
-  console.log(props);
-  const superhero = props.superhero;
-  const backgroundStyle = { background: superhero.color };
-  return (
-    <li>
-      <div style={backgroundStyle}>
-        <h2>{superhero.name}</h2>
-        <p>Alter Ego: {superhero.alterEgo}</p>
-        <p>Power: {superhero.power}</p>
-        <p>Home City: {superhero.homeCity}</p>
-      </div>
-    </li>
-  );
-}
+import Header from "./components/Header";
+import { Route, Routes } from "react-router-dom";
+import SuperheroList from "./components/SuperheroList";
+import SuperheroForm from "./components/SuperheroForm";
+import Login from "./components/Login";
 function App() {
-  const [superheroes, setSuperheroes] = useState();
-
-  const getSuperheroes = async () => {
-    const response = await fetch("/api");
-    const data = await response.json();
-    setSuperheroes(data);
-  };
-
-  useEffect(() => {
-    getSuperheroes();
-  }, []);
-
   return (
-    <div>
-      <h1>Superheroes</h1>
-      <ul>
-        {superheroes &&
-          superheroes.map((superhero) => {
-            return (
-              <SuperheroDetails key={superhero.name} superhero={superhero} />
-            );
-          })}
-      </ul>
-      <SuperheroForm />
-    </div>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<SuperheroList />} />
+        <Route path="/add" element={<SuperheroForm />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </>
   );
 }
 

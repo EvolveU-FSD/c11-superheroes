@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthProvider";
 
 const SuperheroForm = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [power, setPower] = useState("");
   const [homeCity, setHomeCity] = useState("");
   const [alterEgo, setAlterEgo] = useState("");
-  console.log(alterEgo);
   const submitForm = async () => {
     const newSuperhero = {
       name,
@@ -23,7 +25,12 @@ const SuperheroForm = () => {
     });
     const createdSuperhero = await response.json();
     console.log("createdSuperhero", createdSuperhero);
+    navigate("/");
   };
+  const { user } = useAuth();
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
   return (
     <div>
       <label>Name</label>
